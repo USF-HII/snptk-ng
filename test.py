@@ -5,6 +5,7 @@ import json
 import sqlite3
 import sys
 
+
 def build_db_merged(fname):
     """
     Build a dictionary of snp to merged snp. We must track revision because there may be multiple
@@ -29,7 +30,9 @@ def build_db_merged(fname):
     return db
 
 
-db = build_db_merged("/shares/hii/bioinfo/ref/ncbi/snp/archive/b156/JSON/refsnp-merged.json.bz2")
+db = build_db_merged(
+    "/shares/hii/bioinfo/ref/ncbi/snp/archive/b156/JSON/refsnp-merged.json.bz2"
+)
 
 print("start")
 
@@ -42,3 +45,6 @@ c.execute("CREATE TABLE merged (rsid INTEGER PRIMARY KEY, rsid_merged INTEGER)")
 c.executemany("INSERT INTO merged VALUES (?, ?)", ((k, db[k][0]) for k in sorted(db)))
 
 c.commit()
+
+# /shares/hii/bioinfo/ref/ncbi/snp/archive/b156/JSON/refsnp-merged.json.bz2
+# /shares/hii/bioinfo/ref/ncbi/snp/archive/b156/JSON/refsnp-chr21.json.bz2
